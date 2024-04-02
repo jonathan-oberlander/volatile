@@ -10,8 +10,6 @@ export function SizeSlider(props: SliderProps) {
     })),
   )
 
-  console.log('re-render-slider')
-
   return (
     <Slider
       fontVariant="all-small-caps"

@@ -11,3 +11,5 @@ pnpm dev
 
 pnpm build
 ```
+
+![Alt text](/public/screenshot.png?raw=true "Screenshot dark")

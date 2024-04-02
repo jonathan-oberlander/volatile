@@ -57,9 +57,10 @@ function Info({
   title,
   value,
   children,
+  ...props
 }: PropsWithChildren<{ title: string; value: string } & HstackProps>) {
   return (
-    <HStack justifyContent="space-evenly">
+    <HStack justifyContent="space-evenly" {...props}>
       <Box textAlign="end">
         <Text size="xs" fontWeight="light" color="neutral.9">
           {title}

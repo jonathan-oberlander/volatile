@@ -39,7 +39,6 @@ export function Live() {
               <StreamControls products={response.data} />
             </Flex>
             <Flex flex="auto" gap="4" p="4" h="0">
-              {/** do not remove height 0 */}
               <Box w="full" overflowY="auto" shadow="sm" borderRadius="md">
                 <LiveTable />
               </Box>
