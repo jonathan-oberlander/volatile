@@ -1,0 +1,101 @@
+{
+  "description": "",
+  "schema": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "example": {
+        "id": "BTC-USD",
+        "base_currency": "BTC",
+        "quote_currency": "USD",
+        "quote_increment": "0.01000000",
+        "base_increment": "0.00000001",
+        "display_name": "BTC/USD",
+        "min_market_funds": "10",
+        "margin_enabled": false,
+        "post_only": false,
+        "limit_only": false,
+        "cancel_only": false,
+        "status": "online",
+        "status_message": "",
+        "auction_mode": true
+      },
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "base_currency": {
+          "type": "string"
+        },
+        "quote_currency": {
+          "type": "string"
+        },
+        "quote_increment": {
+          "type": "string",
+          "description": "Min order price (a.k.a. price increment"
+        },
+        "base_increment": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "min_market_funds": {
+          "type": "string"
+        },
+        "margin_enabled": {
+          "type": "boolean"
+        },
+        "post_only": {
+          "type": "boolean"
+        },
+        "limit_only": {
+          "type": "boolean"
+        },
+        "cancel_only": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["online", "offline", "internal", "delisted"],
+          "default": "online"
+        },
+        "status_message": {
+          "type": "string"
+        },
+        "trading_disabled": {
+          "type": "boolean"
+        },
+        "fx_stablecoin": {
+          "type": "boolean"
+        },
+        "max_slippage_percentage": {
+          "type": "string"
+        },
+        "auction_mode": {
+          "type": "boolean"
+        },
+        "high_bid_limit_percentage": {
+          "type": "string",
+          "description": "Percentage to calculate highest price for limit buy order (Stable coin trading pair only)"
+        }
+      },
+      "required": [
+        "id",
+        "base_currency",
+        "quote_currency",
+        "quote_increment",
+        "base_increment",
+        "display_name",
+        "status",
+        "status_message",
+        "min_market_funds",
+        "margin_enabled",
+        "post_only",
+        "limit_only",
+        "cancel_only",
+        "auction_mode"
+      ]
+    }
+  }
+}
