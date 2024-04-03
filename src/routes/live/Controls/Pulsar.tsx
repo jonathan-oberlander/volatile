@@ -14,11 +14,11 @@ const Pulse = styled('div', {
 
   variants: {
     pulse: {
-      buy: {
+      true: {
         shadow: 'md',
         bg: 'accent.default',
       },
-      sell: {
+      false: {
         shadow: 'lg',
         bg: 'accent.2',
       },
@@ -26,12 +26,12 @@ const Pulse = styled('div', {
   },
 
   defaultVariants: {
-    pulse: 'sell',
+    pulse: false,
   },
 })
 
 export function Pulsar() {
   const pulse = useDataStreamStore(state => state.data[0]?.side)
 
-  return <Pulse pulse={pulse} />
+  return <Pulse pulse={pulse === 'buy'} />
 }
