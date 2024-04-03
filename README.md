@@ -1,6 +1,6 @@
 # Volatile
 
-A realtime data visualisation UI to show how quickly crytpo currencies devaluate
+A realtime data visualisation UI to show crytpo currencies volatility
 
 ## Getting started
 
