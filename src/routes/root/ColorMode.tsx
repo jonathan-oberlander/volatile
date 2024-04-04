@@ -7,7 +7,11 @@ import { useLazyRef } from '~/lib/utils'
 type ColorMode = 'light' | 'dark'
 
 class DocumentColorMode {
-  mql = matchMedia('(prefers-color-scheme: light)')
+  private _mql = matchMedia('(prefers-color-scheme: light)')
+
+  get mql() {
+    return this._mql
+  }
 
   applyColorMode = (colorMode: ColorMode) =>
     document.documentElement.setAttribute('data-color-mode', colorMode)
@@ -20,11 +24,17 @@ class DocumentColorMode {
   flipColorMode = (): ColorMode =>
     this.readColorMode() === 'light' ? 'dark' : 'light'
 
-  getPrefersColorScheme = (): ColorMode => (this.mql.matches ? 'light' : 'dark')
+  getPrefersColorScheme = (): ColorMode =>
+    this._mql.matches ? 'light' : 'dark'
 
   toggleColorMode = () => this.applyColorMode(this.flipColorMode())
 
   setColorMode = () => this.applyColorMode(this.getPrefersColorScheme())
+
+  addListener = () => this._mql.addEventListener('change', this.setColorMode)
+
+  removeListener = () =>
+    this._mql.removeEventListener('change', this.setColorMode)
 }
 
 const useColorMode = () => {
@@ -32,12 +42,10 @@ const useColorMode = () => {
 
   useEffect(() => {
     colorMode.setColorMode()
-
-    const mql = matchMedia('(prefers-color-scheme: light)')
-    mql.addEventListener('change', colorMode.setColorMode)
+    colorMode.addListener()
 
     return () => {
-      mql.removeEventListener('change', colorMode.setColorMode)
+      colorMode.removeListener()
     }
   }, [colorMode])
 
@@ -49,7 +57,7 @@ export function ColorMode() {
   const { toggleColorMode, flipColorMode } = useColorMode()
 
   useEffect(() => {
-    setMode(flipColorMode())
+    setMode(flipColorMode()) // set icon state
   }, [flipColorMode])
 
   return (
