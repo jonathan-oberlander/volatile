@@ -25,7 +25,10 @@ export function SubscriptionButton() {
   return (
     <Button
       size="sm"
-      variant={streaming ? 'outline' : 'solid'}
+      transition="all"
+      transitionTimingFunction="pulse"
+      shadow={streaming ? 'xs' : 'sm'}
+      variant={streaming ? 'subtle' : 'outline'}
       onClick={streaming ? unsubscribe : subscribe}
     >
       {streaming ? <Square /> : <Play />}
