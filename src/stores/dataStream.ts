@@ -2,6 +2,10 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import type { Heartbeat, SideFilter, Tick } from '~/types/types'
 
+// const ReadyStateMap = ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'] as const
+
+// type ReadyState = (typeof ReadyStateMap)[number]
+
 type DataStream = {
   // --- state ---
   data: Tick[]
@@ -10,6 +14,7 @@ type DataStream = {
   streaming: boolean
   heartBeat: Heartbeat | null
   error: string | null
+  // readyState: ReadyState | undefined
 
   // --- functions ---
   setData: (data: Tick) => void
@@ -19,6 +24,7 @@ type DataStream = {
   setSideFilter: (sideFilter: SideFilter) => void
   setStreaming: (streaming: boolean) => void
   setHeartBeat: (heartBeat: Heartbeat) => void
+  // setReadyState: (readyState: number | undefined) => void
 }
 
 export const useDataStreamStore = create<DataStream>()(
@@ -30,6 +36,7 @@ export const useDataStreamStore = create<DataStream>()(
     streaming: false,
     heartBeat: null,
     error: null,
+    // readyState: undefined,
 
     // --- functions ---
     setData: data =>
@@ -43,6 +50,11 @@ export const useDataStreamStore = create<DataStream>()(
     setSideFilter: sideFilter => set(state => ({ ...state, sideFilter })),
     setStreaming: streaming => set(state => ({ ...state, streaming })),
     setHeartBeat: heartBeat => set(state => ({ ...state, heartBeat })),
+    // setReadyState: (readyState: number | undefined) =>
+    //   set(state => ({
+    //     ...state,
+    //     readyState: ReadyStateMap[readyState ?? 0],
+    //   })),
   })),
 )
 

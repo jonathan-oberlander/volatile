@@ -26,6 +26,9 @@ dependencies:
   recharts:
     specifier: ^2.12.3
     version: 2.12.3(react-dom@18.2.0)(react@18.2.0)
+  ts-pattern:
+    specifier: ^5.1.0
+    version: 5.1.0
   zustand:
     specifier: ^4.5.2
     version: 4.5.2(@types/react@18.2.61)(react@18.2.0)
@@ -3353,6 +3356,10 @@ packages:
   /ts-pattern@5.0.8:
     resolution: {integrity: sha512-aafbuAQOTEeWmA7wtcL94w6I89EgLD7F+IlWkr596wYxeb0oveWDO5dQpv85YP0CGbxXT/qXBIeV6IYLcoZ2uA==}
     dev: true
+
+  /ts-pattern@5.1.0:
+    resolution: {integrity: sha512-sULbgZDTXrcr6WMeuR8gPb+dvNN/fNpxE8GHfosFHPJRPuxHVNtGcEiiNuQa6nxu40/dY6xYdTJmc7MG3w8B5g==}
+    dev: false
 
   /tsconfck@3.0.2(typescript@5.3.3):
     resolution: {integrity: sha512-6lWtFjwuhS3XI4HsX4Zg0izOI3FU/AI9EGVlPEUMDIhvLPMD4wkiof0WCoDgW7qY+Dy198g4d9miAqUHWHFH6Q==}

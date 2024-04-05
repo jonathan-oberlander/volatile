@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 
 import { useDataStreamStore } from '~/stores/dataStream'
@@ -14,15 +14,14 @@ export function useSubscription({
   instant = true,
   match,
 }: { instant?: boolean; match: Match }) {
-  const { setHeartBeat, setTicker, setStreaming, setError } =
-    useDataStreamStore(
-      useShallow(s => ({
-        setTicker: s.setData,
-        setHeartBeat: s.setHeartBeat,
-        setStreaming: s.setStreaming,
-        setError: s.setError,
-      })),
-    )
+  const methods = useDataStreamStore(
+    useShallow(s => ({
+      setTicker: s.setData,
+      setHeartBeat: s.setHeartBeat,
+      setStreaming: s.setStreaming,
+      setError: s.setError,
+    })),
+  )
 
   const ws = useRef<WebSocket | null>(null)
 
@@ -52,45 +51,49 @@ export function useSubscription({
 
   const start = useCallback(() => {
     const ws = subscribe(match)
-    setStreaming(true)
+    methods.setStreaming(true)
 
     ws.onmessage = (event: MessageEvent<string>) => {
       const data = JSON.parse(event.data) as Heartbeat | Ticker
 
       if (isError(data)) {
-        setError(data.reason)
+        methods.setError(data.reason)
       } else if (isSubscriptions(data)) {
         // unhandled for now
         console.log(data)
       } else if (isHeartbeat(data)) {
-        setHeartBeat(data)
+        methods.setHeartBeat(data)
       } else {
-        setTicker(parseTicker(data))
+        methods.setTicker(parseTicker(data))
       }
     }
-  }, [match, subscribe, setTicker, setHeartBeat, setStreaming, setError])
+  }, [match, subscribe, methods])
 
   const unsubscribe = useCallback(() => {
     if (ws.current?.readyState !== ws.current?.CONNECTING) {
       ws.current?.close()
-      setStreaming(false)
+      methods.setStreaming(false)
     }
-  }, [setStreaming])
+  }, [methods.setStreaming])
 
   useEffect(() => {
     if (instant) {
       start()
     }
 
+    const onVisibilityChange = () => (document.hidden ? unsubscribe() : start())
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
     return () => {
       unsubscribe()
+      document.removeEventListener('visibilitychange', onVisibilityChange)
     }
   }, [instant, start, unsubscribe])
 
   return {
     subscribe: start,
     unsubscribe,
-    readyState: ws.current?.readyState,
   }
 }
 
